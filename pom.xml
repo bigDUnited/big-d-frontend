@@ -16,12 +16,12 @@
     
     <repositories>
       <repository>
-        <id>choir-repo</id>
+        <id>big-d-repo</id>
         <name>Helges Repo</name>
         <url>http://138.68.86.0:8082/artifactory/libs-release-local</url>
       </repository>
       <repository>
-        <id>choir-repo-snapshot</id>
+        <id>big-d-repo-snapshot</id>
         <name>Helges Snapshot Repo</name>
         <url>http://138.68.86.0:8082/artifactory/libs-snapshot-local</url>
       </repository>
