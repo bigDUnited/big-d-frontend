@@ -1,2 +1,5 @@
 !**/*.war
 /target/
+.classpath
+.project
+.settings/
