@@ -1,23 +1,41 @@
 <!doctype html>
 
 <html lang="en">
-<head>
-    <meta charset="utf-8">
+    <head>
+        <meta charset="utf-8">
+        <title>Reservation Summary</title>
+        <script src="js/jquery-3.1.1.min.js"></script>
+        <script src="js/summary.js"></script>
+        <link rel="stylesheet" href="css/style.css" />
+    </head>
 
-    <title>Reservation Summary</title>
-    <script src="js/jquery-3.1.1.min.js"></script>
-  	<script src="js/summary.js"></script>
-    
-</head>
-
-<body>
-	
-	<a href="/reservation"><button>Home</button></a>
-	<h1>Summary</h1>
-
-	<p id="reservationId">Reservation ID: </p> 
-	<p id="location">Location: </p>
-    <p id="route">Route: </p>
-    <p id="journey">Journey: </p>
-</body>
-</html
+    <body>
+        <a class="button" href="/reservation">Home</a>
+        <h1>Summary</h1>
+        <table>
+            <thead>
+                <tr>
+                    <td colspan="2">Your Reservation</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="left-align">Reservation Id:</td>
+                    <td id="reservationId"></td>
+                </tr>
+                <tr>
+                    <td>Location:</td>
+                    <td id="location"></td>
+                </tr>
+                <tr>
+                    <td>Route:</td>
+                    <td id="route"></td>
+                </tr>
+                <tr>
+                    <td>Journey:</td>
+                    <td id="journey"></td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

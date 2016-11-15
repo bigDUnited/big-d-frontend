@@ -369,10 +369,25 @@
 		}
 
 /* Tables */
-
 	table {
 		width: 100%;
+                color:white;
 	}
+        
+        table tbody > tr > td:first-child{
+            text-align: right;
+        }
+        table thead  {
+            text-align: center;
+            background-color: grey;
+        }
+        table th, td {
+            padding: 8px;
+        }
+        
+        table tr:nth-child(even) {
+            background-color: grey;
+        }
 
 		table.default {
 			width: 100%;
