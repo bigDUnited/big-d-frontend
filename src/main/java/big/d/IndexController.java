@@ -2,6 +2,7 @@ package big.d;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import dtos.JourneysDTO;
 import dtos.LocationDTO;
 import dtos.RouteDTO;
 import java.io.IOException;
@@ -22,43 +23,54 @@ import utils.GetRequest;
 
 @WebServlet(name = "IndexController", urlPatterns = {"/reservation"})
 public class IndexController extends HttpServlet {
-    
+
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
         Thread t = new Thread(new BackendMockHttpServer());
         t.start();
-        
+
         GetRequest gr = new GetRequest();
         String locationString = gr.sendGet("http://localhost:8084/api/getLocations");
-        
+
         Type listType = new TypeToken<List<LocationDTO>>() {
         }.getType();
         List<LocationDTO> locations = new Gson().fromJson(locationString, listType);
-        
+
         String locationId = request.getParameter("locationId");
-        
+        String routeId = request.getParameter("routeId");
+
         List<RouteDTO> routes = new ArrayList();
+        JourneysDTO journeys = null;
+        
         if (locationId != null && !locationId.isEmpty()) {
             String routesString = gr.sendGet("http://localhost:8084/api/getRoutes/" + locationId);
-            
+
             Type listRouteType = new TypeToken<List<RouteDTO>>() {
             }.getType();
             routes = new Gson().fromJson(routesString, listRouteType);
-        } else {
-            System.out.println("Location is not defined!!!");
+            
+            //only search for journeys if searched for routes
+            if (routeId != null && !routeId.isEmpty()) {
+
+                String journeysString = gr.sendGet("http://localhost:8084/api/getJourney/" + routeId);
+                System.out.println("journeysString> " + journeysString);
+                
+                journeys = new Gson().fromJson(journeysString, JourneysDTO.class);
+            }
         }
-        
-        for (int i = 0; i < routes.size(); i++) {
-            System.out.println(i + " > " + routes.get(i));
-        }
-        
+
         PrintWriter out = response.getWriter();
         try {
             request.setAttribute("locations", locations);
             if (locationId != null && !locationId.isEmpty()) {
                 request.setAttribute("routes", routes);
+
+                if (routeId != null && !routeId.isEmpty()) {
+                    request.setAttribute("journeys", journeys);
+                }
             }
+
             request.setCharacterEncoding("UTF-8");
             request.getRequestDispatcher("reservation.jsp").forward(request, response);
         } catch (Exception e) {

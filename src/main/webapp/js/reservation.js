@@ -1,22 +1,25 @@
 
-function loadRoutes() {
-    var selectBox = document.getElementById("locationSelect");
-    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+function getSelectValueBySelectId(selectId) {
+    var selectBox = document.getElementById(selectId);
+    return selectBox.options[selectBox.selectedIndex].value;
+}
 
-    var url = '';
-    if (url.indexOf('?') > -1) {
-        url += '&locationId=' + selectedValue
-    } else {
-        url += '?locationId=' + selectedValue
-    }
-    window.location.href = url;
+function loadRoutes() {
+    var selectedValue = getSelectValueBySelectId("locationSelect");
+    window.location.href = window.location.href + '?locationId=' + selectedValue
 }
 
 function loadJourneys() {
-    var selectBox = document.getElementById("routeSelect");
-    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-
-    window.location.href = '?routeId=' + selectedValue;
+    var selectedValue = getSelectValueBySelectId("routeSelect");
+    window.location.href = window.location.href + '&routeId=' + selectedValue;
 }
 
-console.log("Hello world");
+function createReservation() {
+    var carValue = getSelectValueBySelectId("carSelect");
+    var numOfPeople = document.getElementById("numOfPeople").value;
+    var journeyValue = getSelectValueBySelectId("journeySelect");
+    
+    if ( carValue && numOfPeople && journeyValue ){
+        window.location.href = window.location.href + '&carType=' + carValue + '&numOfPeople=' + numOfPeople + '&journeyId=' + journeyValue;
+    }
+}
