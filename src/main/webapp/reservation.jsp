@@ -52,5 +52,20 @@
                 <button onclick="createReservation();">Create Reservation</button>
             </div>
         </c:if>
+        <c:if test="${not empty summary}">
+            <div>
+                <h2>Successful Reservation!</h2>
+                <h3>Reference Number: ${summary.referenceNumber}</h3>
+                <h3>Ferry name: ${summary.ferryName}</h3>
+                <h3>Departure Location: ${summary.departureLocation}</h3>
+                <h3>Destination Location: ${summary.destinationLocation}</h3>
+                <h3>Departure Date: ${summary.departureDate}</h3>
+                <h3>Arrival Date ${summary.arrivalDate}</h3>
+                <h3>Number of people: ${summary.numberOfPeople}</h3>
+                <h3>Vehicle type: ${summary.vehicleType}</h3>
+                <span>Error is not possible for the current version of the backend mock - fix/ and then fix the logic here</span>
+            </div>
+        </c:if>
+        <span style="color: red;">styling*</span>
     </body>
 </html>

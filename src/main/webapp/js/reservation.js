@@ -15,11 +15,11 @@ function loadJourneys() {
 }
 
 function createReservation() {
-    var carValue = getSelectValueBySelectId("carSelect");
+    var vehicleType = getSelectValueBySelectId("carSelect");
     var numOfPeople = document.getElementById("numOfPeople").value;
     var journeyValue = getSelectValueBySelectId("journeySelect");
     
-    if ( carValue && numOfPeople && journeyValue ){
-        window.location.href = window.location.href + '&carType=' + carValue + '&numOfPeople=' + numOfPeople + '&journeyId=' + journeyValue;
+    if ( vehicleType && numOfPeople && journeyValue ){
+        window.location.href = window.location.href + '&vehicleType=' + vehicleType + '&numOfPeople=' + numOfPeople + '&journeyId=' + journeyValue;
     }
 }
