@@ -8,12 +8,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Reservation</title>
     </head>
-    <body>
+    <body onload="load();">
         <c:choose>
             <c:when test="${empty errorObject}">
                 <div>
                     <h1>Select Location:</h1>
                     <select id="locationSelect" onchange="loadRoutes();">
+                        <option value="-1">Select Location</option>
                         <c:forEach var="location" items="${locations}">
                             <option value="${location.locationId}">${location.locationName}</option>
                         </c:forEach>
@@ -23,6 +24,7 @@
                     <div>
                         <h1>Select Route</h1>
                         <select id="routeSelect" onchange="loadJourneys();">
+                            <option value="-1">Select Route</option>
                             <c:forEach var="route" items="${routes}">
                                 <option value="${route.routeId}">${route.departureLocation} - ${route.destinationLocation} </option>
                             </c:forEach>
@@ -35,6 +37,7 @@
                         <div>Departure: ${journeys.departureLocation}</div>
                         <div>Destination: ${journeys.destinationLocation}</div>
                         <select id="journeySelect">
+                            <option value="-1">Select Journey</option>
                             <c:forEach var="journey" items="${journeys.journeysList}">
                                 <option value="${journey.journeyId}">[ ${journey.departureDate} > ${journey.arrivalDate} ] - ${journey.ferryName}</option>
                             </c:forEach>
@@ -46,9 +49,12 @@
                         <div>
                             <span>Vehicle Type: </span>
                             <select id="carSelect">
+                                <option value="-1">Select Vehicle Type</option>
                                 <option value="car">Car</option>
                                 <option value="bus">Bus</option>
-                                <option value="marek">Marek</option>
+                                <option value="truck">Truck</option>
+                                <option value="airplane">Airplane</option>
+                                <option value="spaceship">Space Ship</option>
                             </select>
                         </div>
                         <button onclick="createReservation();">Create Reservation</button>
