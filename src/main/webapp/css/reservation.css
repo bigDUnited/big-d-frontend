@@ -1,0 +1,101 @@
+body {
+    background-color: #f2f2f2;
+    font-size: 14px;
+    color: #555555;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.65em;
+    margin: 10px;
+}
+
+hr {
+    color: #46799e;
+    border: 1px solid;
+}
+
+.header-wrapper span {
+    display: inline-block;
+}
+
+.header-wrapper .header-title {
+    display: block;
+    margin: 1em 0 1em 25px;
+    letter-spacing: 1px;
+    line-height: 1.4em;
+    text-transform: uppercase;
+    font-size: 1.6em;
+    font-weight: 700;
+    color: #46799e;
+    text-decoration: underline;
+}
+
+.header-wrapper .header-description {
+    background-color: #46799e;
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    font-style: italic;
+}
+
+.main-content-wrapper {
+    margin-top: 10px;
+}
+
+.main-content-wrapper .stage-wrapper {
+    margin: 5px 5px 15px;
+}
+
+.main-content-wrapper .stage-wrapper label,
+.main-content-wrapper .stage-wrapper .label-like {
+    font-weight: 700;
+    color: #46799e;
+}
+
+.main-content-wrapper .stage-wrapper .selected-like {
+    font-size: 1.5em;
+    font-style: italic;
+}
+
+.main-content-wrapper .create-reservation-btn {
+    cursor: pointer;
+    background-color: #1889dc;
+    border: none;
+    color: #fff;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.main-content-wrapper .reservation-summary-wrapper {
+    background-color: #46799e;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.main-content-wrapper .reservation-summary-wrapper .reservation-label {
+    font-weight: 700;
+}
+
+.main-content-wrapper .reservation-summary-wrapper .reservation-content {
+    font-size: 1.2em;
+}
+
+#locationSelect,
+#routeSelect,
+#journeySelect,
+#carSelect {
+    cursor: pointer;
+    font-size: 1.2em;
+    color: #fff;
+    background-color: #46799e;
+}
+
+#numOfPeople {
+    padding: 5px 0 5px 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
