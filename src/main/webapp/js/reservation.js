@@ -1,4 +1,27 @@
 
+function removeURLParameter(url, parameter) {
+    //prefer to use l.search if you have a location/link object
+    var urlparts = url.split('?');
+    if (urlparts.length >= 2) {
+
+        var prefix = encodeURIComponent(parameter) + '=';
+        var pars = urlparts[1].split(/[&;]/g);
+
+        //reverse iteration as may be destructive
+        for (var i = pars.length; i-- > 0; ) {
+            //idiom for string.startsWith
+            if (pars[i].lastIndexOf(prefix, 0) !== -1) {
+                pars.splice(i, 1);
+            }
+        }
+
+        url = urlparts[0] + (pars.length > 0 ? '?' + pars.join('&') : "");
+        return url;
+    } else {
+        return url;
+    }
+}
+
 function findGetParameter(parameterName) {
     var result = null,
             tmp = [];
@@ -36,7 +59,7 @@ function loadJourneys() {
     var selectedValue = getSelectValueBySelectId("routeSelect");
 
     if (window.location.href.indexOf("routeId") > -1) {
-        //window.location.href = window.location.href.split('?')[0]
+        window.location.href = window.location.href.split('&')[0] + '&routeId=' + selectedValue;
     } else {
         window.location.href = window.location.href + '&routeId=' + selectedValue;
     }
@@ -48,7 +71,24 @@ function createReservation() {
     var journeyValue = getSelectValueBySelectId("journeySelect");
 
     if (vehicleType && numOfPeople && journeyValue) {
-        window.location.href = window.location.href + '&vehicleType=' + vehicleType + '&numOfPeople=' + numOfPeople + '&journeyId=' + journeyValue;
+        console.log("0 : ", window.location.href);
+        var cleanHref = "";
+        if (window.location.href.indexOf("vehicleType") > -1) {
+            cleanHref = removeURLParameter(window.location.href, "vehicleType");
+        } else {
+            cleanHref = window.location.href;
+        }
+
+        if (window.location.href.indexOf("numOfPeople") > -1) {
+            cleanHref = removeURLParameter(cleanHref, "numOfPeople");
+        }
+
+        if (window.location.href.indexOf("journeyId") > -1) {
+            cleanHref = removeURLParameter(cleanHref, "journeyId");
+        }
+
+        window.location.href = cleanHref + '&vehicleType=' + vehicleType
+                + '&numOfPeople=' + numOfPeople + '&journeyId=' + journeyValue;
     }
 }
 
@@ -70,6 +110,6 @@ function load() {
     }
 
     if (window.location.href.indexOf("numOfPeople") > -1) {
-        document.getElementById("numOfPeople").value = findGetParameter("vehicleType");
+        document.getElementById("numOfPeople").value = findGetParameter("numOfPeople");
     }
 }
