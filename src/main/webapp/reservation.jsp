@@ -7,6 +7,7 @@
         <meta charset="utf-8">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Reservation</title>
+        <link rel="shortcut icon" href="favicon.ico" />
     </head>
     <body onload="load();">
         <c:choose>
@@ -14,7 +15,7 @@
                 <div>
                     <h1>Select Location:</h1>
                     <select id="locationSelect" onchange="loadRoutes();">
-                        <option value="-1">Select Location</option>
+                        <option selected="selected" value="-1">Select Location</option>
                         <c:forEach var="location" items="${locations}">
                             <option value="${location.locationId}">${location.locationName}</option>
                         </c:forEach>
@@ -24,7 +25,7 @@
                     <div>
                         <h1>Select Route</h1>
                         <select id="routeSelect" onchange="loadJourneys();">
-                            <option value="-1">Select Route</option>
+                            <option selected="selected" value="-1">Select Route</option>
                             <c:forEach var="route" items="${routes}">
                                 <option value="${route.routeId}">${route.departureLocation} - ${route.destinationLocation} </option>
                             </c:forEach>

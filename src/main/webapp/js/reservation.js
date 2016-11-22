@@ -46,7 +46,11 @@ function getSelectValueBySelectId(selectId) {
 
 function loadRoutes() {
     var selectedValue = getSelectValueBySelectId("locationSelect");
-
+    if ( selectedValue == -1 ) {
+        window.location.href = ( window.location.href.split('?')[0] )
+        return;
+    }
+    
     if (window.location.href.indexOf("locationId") > -1) {
         window.location.href = window.location.href.split('?')[0] + '?locationId=' + selectedValue;
 
@@ -57,6 +61,11 @@ function loadRoutes() {
 
 function loadJourneys() {
     var selectedValue = getSelectValueBySelectId("routeSelect");
+    
+    if ( selectedValue == -1 ) {
+        window.location.href = ( window.location.href.split('&')[0] )
+        return;
+    }
 
     if (window.location.href.indexOf("routeId") > -1) {
         window.location.href = window.location.href.split('&')[0] + '&routeId=' + selectedValue;
