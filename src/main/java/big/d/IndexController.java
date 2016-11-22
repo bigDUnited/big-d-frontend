@@ -9,7 +9,6 @@ import dtos.RouteDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,17 +17,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import server.*;
 import utilities.HttpServerGeneralUtils;
-import utils.RequestsObject;
+import utils.RequestObjects;
 import utils.StaticStrings;
 
 @WebServlet(name = "IndexController", urlPatterns = {"/reservation"})
 public class IndexController extends HttpServlet {
 
-    private RequestsObject reqObj;
+    private RequestObjects reqObj;
     private StaticStrings ss;
     private Thread backendMockThread;
     private HttpServerGeneralUtils utils;
 
+    @Override
     public void init() throws ServletException {
         backendMockThread = new Thread(new BackendMockHttpServer(new String[0]));
         backendMockThread.start();
@@ -40,7 +40,7 @@ public class IndexController extends HttpServlet {
             System.out.println("Sleep failed, go to sleep, please : " + ex);
         }
 
-        reqObj = new RequestsObject();
+        reqObj = new RequestObjects();
         ss = new StaticStrings();
         utils = new HttpServerGeneralUtils();
     }
@@ -72,6 +72,9 @@ public class IndexController extends HttpServlet {
         //Response for Error
         String plausableError = "";
 
+        boolean areLocationsLoaded = false, areRoutesLoaded = false,
+                areJourneysLoaded = false, isSummaryLoaded = false;
+
         //RO stands for response object eg. Locations Response Object
         Object locationsRO = reqObj.get(ss.GET_LOCATIONS_URL);
         if (locationsRO instanceof String) {
@@ -80,6 +83,13 @@ public class IndexController extends HttpServlet {
             }.getType();
             locations = new Gson().fromJson((String) locationsRO, listType);
 
+            areLocationsLoaded = true;
+        } else {
+            plausableError += "***Oopsy Daisy*** The Location response is :"
+                    + locationsRO;
+        }
+
+        if (areLocationsLoaded) {
             //Only search for routes info if the location id is set
             if (locationId != null && !locationId.isEmpty()) {
                 if (utils.isNumeric(locationId)) {
@@ -88,107 +98,109 @@ public class IndexController extends HttpServlet {
 
                         Type listRouteType = new TypeToken<List<RouteDTO>>() {
                         }.getType();
-                        routes = new Gson().fromJson((String) routesRO,
-                                listRouteType);
+                        routes = new Gson().fromJson((String) routesRO, listRouteType);
 
-                        //Only search for journeys info if the routeId id is set
-                        if (routeId != null && !routeId.isEmpty()) {
-                            if (utils.isNumeric(routeId)) {
-                                Object journeysRO = reqObj.get(ss.GET_JOURNEY_URL + routeId);
+                        areRoutesLoaded = true;
 
-                                if (journeysRO instanceof String) {
-                                    journeys = new Gson().fromJson((String) journeysRO,
-                                            JourneysDTO.class);
-
-                                    //Only post reservation if  vehicleType, numOfPeople 
-                                    //and journeyId are set
-                                    if (vehicleType != null && !vehicleType.isEmpty()
-                                            && numOfPeople != null && !numOfPeople.isEmpty()
-                                            && journeyId != null && !journeyId.isEmpty()) {
-
-                                        if (utils.isNumeric(numOfPeople) && utils.isNumeric(journeyId)) {
-                                            
-                                            //postParams should have similar structure to : 
-                                            //{ "journeyId": 5, "numberOfPeople": 3, "vehicleType": "Car" }
-                                            String postParams = "{ \"journeyId\": " + journeyId
-                                                    + ", \"numberOfPeople\": " + numOfPeople
-                                                    + ", \"vehicleType\": \"" + vehicleType + "\" }";
-
-                                            Object resSumRO = reqObj.post(ss.POST_RESERVATION_URL,
-                                                    postParams);
-
-                                            if (resSumRO instanceof String) {
-                                                reservationSummary = new Gson().fromJson(
-                                                        (String) resSumRO,
-                                                        ReservationSummaryDTO.class);
-                                            } else {
-                                                plausableError += "***Oopsy Daisy*** The "
-                                                        + "Reservation summary response"
-                                                        + " is :" + ((Boolean) resSumRO);
-                                            }
-                                        } else {
-                                            plausableError += "***Oopsy Daisy*** vehicleType "
-                                                    + "or numOfPeople or journeyId was not set"
-                                                    + "correctly";
-                                        }
-                                    }
-                                } else {
-                                    plausableError += "***Oopsy Daisy*** The Journey response"
-                                            + " is :" + ((Boolean) journeysRO);
-                                }
-                            } else {
-                                plausableError += "***Oopsy Daisy*** Route ID was not set "
-                                        + "or was not an integer :" + routeId;
-                            }
-                        }
                     } else {
-                        plausableError += "***Oopsy Daisy*** The Routes response is :"
-                                + ((Boolean) routesRO);
+                        plausableError += "***Oopsy Daisy*** The Routes response "
+                                + "is :" + routesRO;
                     }
                 } else {
-                    plausableError += "***Oopsy Daisy*** Location ID was not set or "
-                            + "was not an integer :" + locationId;
+                    plausableError += "***Oopsy Daisy*** Location ID was not set "
+                            + "or was not an integer :" + locationId;
                 }
             }
-        } else {
-            plausableError += "***Oopsy Daisy*** The Location response is :"
-                    + ((Boolean) locationsRO);
         }
 
-        //set encoding of response - MUST BE CALLED BEFORE response.getWriter()
+        if (areLocationsLoaded && areRoutesLoaded) {
+            //Only search for journeys info if the routeId id is set
+            if (routeId != null && !routeId.isEmpty()) {
+                if (utils.isNumeric(routeId)) {
+                    Object journeysRO = reqObj.get(ss.GET_JOURNEY_URL + routeId);
+
+                    if (journeysRO instanceof String) {
+                        journeys = new Gson().fromJson((String) journeysRO, JourneysDTO.class);
+
+                        areJourneysLoaded = true;
+                    } else {
+                        plausableError += "***Oopsy Daisy*** The Journey response"
+                                + " is :" + journeysRO;
+                    }
+                } else {
+                    plausableError += "***Oopsy Daisy*** Route ID was not set or "
+                            + "was not an integer :" + routeId;
+                }
+            }
+        }
+
+        if (areLocationsLoaded && areRoutesLoaded && areJourneysLoaded) {
+            //Only post reservation if  vehicleType, numOfPeople and journeyId are set
+            if (vehicleType != null && !vehicleType.isEmpty()
+                    && numOfPeople != null && !numOfPeople.isEmpty()
+                    && journeyId != null && !journeyId.isEmpty()) {
+
+                if (utils.isNumeric(numOfPeople) && utils.isNumeric(journeyId)) {
+
+                    //postParams should have similar structure to : 
+                    //{ "journeyId": 5, "numberOfPeople": 3, "vehicleType": "Car" }
+                    String postParams = "{ \"journeyId\": " + journeyId
+                            + ", \"numberOfPeople\": " + numOfPeople
+                            + ", \"vehicleType\": \"" + vehicleType + "\" }";
+
+                    Object resSumRO = reqObj.post(ss.POST_RESERVATION_URL,
+                            postParams);
+
+                    if (resSumRO instanceof String) {
+                        reservationSummary = new Gson().fromJson((String) resSumRO,
+                                ReservationSummaryDTO.class);
+
+                        isSummaryLoaded = true;
+                    } else {
+                        plausableError += "***Oopsy Daisy*** The Reservation summary "
+                                + "response is :" + resSumRO;
+                    }
+                } else {
+                    plausableError += "***Oopsy Daisy*** vehicleType or numOfPeople "
+                            + "or journeyId was not set correctly";
+                }
+            }
+        }
+
+        //set encoding of response MUST BE CALLED BEFORE response.getWriter()
         response.setCharacterEncoding("UTF-8");
 
         PrintWriter out = response.getWriter();
         try {
             if (plausableError.isEmpty()) {
                 request.setAttribute("locations", locations);
-                if (locationId != null && !locationId.isEmpty()) {
+
+                if (areLocationsLoaded && areRoutesLoaded) {
                     request.setAttribute("routes", routes);
-
-                    if (routeId != null && !routeId.isEmpty()) {
-                        request.setAttribute("journeys", journeys);
-
-                        if (vehicleType != null && !vehicleType.isEmpty()
-                                && numOfPeople != null && !numOfPeople.isEmpty()
-                                && journeyId != null && !journeyId.isEmpty()) {
-
-                            request.setAttribute("summary", reservationSummary);
-                        }
-                    }
                 }
+
+                if (areLocationsLoaded && areRoutesLoaded && areJourneysLoaded) {
+                    request.setAttribute("journeys", journeys);
+                }
+
+                if (areLocationsLoaded && areRoutesLoaded && areJourneysLoaded
+                        && isSummaryLoaded) {
+                    request.setAttribute("summary", reservationSummary);
+                }
+
             } else {
                 request.setAttribute("errorObject", plausableError);
             }
 
             request.getRequestDispatcher("reservation.jsp").forward(request, response);
-        } catch (Exception e) {
+
+        } catch (IOException | ServletException e) {
+
             out.println("<h2>" + e.getMessage() + "</h2>");
             out.print("<hr/");
             out.print("<pre>");
             e.printStackTrace(out);
             out.println("</pre>");
         }
-
     }
-
 }

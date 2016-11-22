@@ -11,11 +11,13 @@ import java.net.URLConnection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class RequestsObject {
+public class RequestObjects {
 
     private final String USER_AGENT = "Mozilla/5.0";
 
     public <T> T get(String url) {
+        System.out.println("Frontend RequestObjects DEBUG: # 'GET' request for "
+                + "URL : " + url);
 
         try {
             URL obj = new URL(url);
@@ -26,52 +28,62 @@ public class RequestsObject {
 
             //add request header
             con.setRequestProperty("User-Agent", USER_AGENT);
-            
-            int responseCode = con.getResponseCode();
-            System.out.println("\nSending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);
 
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
+            int responseCode = con.getResponseCode();
+            System.out.println("Frontend RequestObjects DEBUG: # Response Code : "
+                    + responseCode);
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
 
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
 
             in.close();
-
-            System.out.println("Response content : " + response.toString());
+            System.out.println("Frontend RequestObjects DEBUG: # Response content : "
+                    + response.toString());
             return (T) (String) response.toString();
         } catch (MalformedURLException ex) {
-            Logger.getLogger(RequestsObject.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RequestObjects.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(RequestsObject.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RequestObjects.class.getName()).log(Level.SEVERE, null, ex);
         }
         return (T) (Boolean) false;
     }
 
     public String post(String url, String params) {
+        System.out.println("Frontend RequestObjects DEBUG: # 'POST' request for "
+                + "URL : " + url + ", parameters : " + params);
+
         try {
-            URL urlObj = new URL(url);
-            URLConnection conn = urlObj.openConnection();
+            URL obj = new URL(url);
+            URLConnection conn = obj.openConnection();
+
+            //Set to true so that we can send (output) a request body,
             conn.setDoOutput(true);
+
             OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
             writer.write(params);
+
             writer.flush();
-            String line;
+
             BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            while ((line = reader.readLine()) != null) {
-                System.out.println("POST REPLY : " + line);
-                return line;
+            StringBuilder response = new StringBuilder();
+
+            String inputLine;
+            while ((inputLine = reader.readLine()) != null) {
+                response.append(inputLine);
             }
+
             writer.close();
             reader.close();
+            System.out.println("Frontend RequestObjects DEBUG: # Response content : " + response.toString());
+            return response.toString();
         } catch (Exception ex) {
-            Logger.getLogger(RequestsObject.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RequestObjects.class.getName()).log(Level.SEVERE, null, ex);
             return "";
         }
-        return "";
     }
 }
