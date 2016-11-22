@@ -9,6 +9,7 @@ import dtos.RouteDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -153,6 +154,9 @@ public class IndexController extends HttpServlet {
                     + ((Boolean) locationsRO);
         }
 
+        //set encoding of response - MUST BE CALLED BEFORE response.getWriter()
+        response.setCharacterEncoding("UTF-8");
+
         PrintWriter out = response.getWriter();
         try {
             if (plausableError.isEmpty()) {
@@ -175,7 +179,6 @@ public class IndexController extends HttpServlet {
                 request.setAttribute("errorObject", plausableError);
             }
 
-            request.setCharacterEncoding("UTF-8");
             request.getRequestDispatcher("reservation.jsp").forward(request, response);
         } catch (Exception e) {
             out.println("<h2>" + e.getMessage() + "</h2>");
