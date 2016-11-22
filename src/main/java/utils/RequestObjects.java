@@ -46,14 +46,14 @@ public class RequestObjects {
                     + response.toString());
             return (T) (String) response.toString();
         } catch (MalformedURLException ex) {
-            Logger.getLogger(RequestObjects.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Frontend RequestObjects DEBUG: # 'GET' - ERROR - Exception : " + ex);
         } catch (IOException ex) {
-            Logger.getLogger(RequestObjects.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Frontend RequestObjects DEBUG: # 'GET' - ERROR - Exception : " + ex);
         }
         return (T) (Boolean) false;
     }
 
-    public String post(String url, String params) {
+    public <T> T post(String url, String params) {
         System.out.println("Frontend RequestObjects DEBUG: # 'POST' request for "
                 + "URL : " + url + ", parameters : " + params);
 
@@ -80,10 +80,10 @@ public class RequestObjects {
             writer.close();
             reader.close();
             System.out.println("Frontend RequestObjects DEBUG: # Response content : " + response.toString());
-            return response.toString();
+            return (T) (String) response.toString();
         } catch (Exception ex) {
-            Logger.getLogger(RequestObjects.class.getName()).log(Level.SEVERE, null, ex);
-            return "";
+            System.out.println("Frontend RequestObjects DEBUG: # 'POST' - ERROR - Exception : " + ex);
         }
+        return (T) (Boolean) false;
     }
 }
