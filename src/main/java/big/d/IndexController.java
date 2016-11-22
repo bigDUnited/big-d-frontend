@@ -30,7 +30,7 @@ public class IndexController extends HttpServlet {
     private HttpServerGeneralUtils utils;
 
     public void init() throws ServletException {
-        backendMockThread = new Thread(new BackendMockHttpServer());
+        backendMockThread = new Thread(new BackendMockHttpServer(new String[0]));
         backendMockThread.start();
 
         int loadingTime = 1000;
@@ -107,11 +107,12 @@ public class IndexController extends HttpServlet {
                                             && journeyId != null && !journeyId.isEmpty()) {
 
                                         if (utils.isNumeric(numOfPeople) && utils.isNumeric(journeyId)) {
+                                            
                                             //postParams should have similar structure to : 
                                             //{ "journeyId": 5, "numberOfPeople": 3, "vehicleType": "Car" }
-                                            String postParams = "journeyId=" + journeyId
-                                                    + "&numberOfPeople=" + numOfPeople
-                                                    + "&vehicleType=" + vehicleType;
+                                            String postParams = "{ \"journeyId\": " + journeyId
+                                                    + ", \"numberOfPeople\": " + numOfPeople
+                                                    + ", \"vehicleType\": \"" + vehicleType + "\" }";
 
                                             Object resSumRO = reqObj.post(ss.POST_RESERVATION_URL,
                                                     postParams);
