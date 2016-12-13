@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+    <!-- ========================================================== -->
+    <!-- General Info -->
+    <!-- ========================================================== -->
+
+    <display-name>Big D Frontend</display-name>
+    <description>Big D Frontend Description</description>
+
+
+    <!-- ========================================================== -->
+    <!-- CMS Servlet -->
+    <!-- ========================================================== -->
+	
+    <!-- Define the com.examplecompany.MyCMS servlet class, giving it the name MyCMS -->
+    <servlet>
+        <servlet-name>Reservation</servlet-name>
+        <servlet-class>big.d.IndexController</servlet-class>
+    </servlet>
+    <!-- Map the MyCMS name to the URI /CMS (main page for site) -->
+    <servlet-mapping>
+        <servlet-name>Reservation</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+	
+	
+    <!-- ========================================================== -->
+    <!-- Welcome Files -->
+    <!-- ========================================================== -->
+
+    <!-- The main page for the site will be the MyCMS servlet (http://website/CMS) -->
+    <!-- No mapping is defined for other folders (http://website/someFolder/CMS), -->
+    <!-- so one of the other files will be displayed (index.html, index.htm, index.jsp) -->
+    <welcome-file-list>
+        <welcome-file>redirect.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>

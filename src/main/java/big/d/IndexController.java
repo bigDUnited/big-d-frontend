@@ -14,19 +14,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import utils.HttpServerGeneralUtils;
-import utils.StaticStrings;
 
 @WebServlet(name = "IndexController", urlPatterns = {"/reservation"})
 public class IndexController extends HttpServlet {
 
-    private StaticStrings ss;
     private MockController backendMock;
     private HttpServerGeneralUtils utils;
 
     @Override
     public void init() throws ServletException {
         backendMock = MockController.getInstance();
-        ss = new StaticStrings();
         utils = new HttpServerGeneralUtils();
     }
 
