@@ -80,7 +80,6 @@ function createReservation() {
     var journeyValue = getSelectValueBySelectId("journeySelect");
 
     if (vehicleType && numOfPeople && journeyValue) {
-        console.log("0 : ", window.location.href);
         var cleanHref = "";
         if (window.location.href.indexOf("vehicleType") > -1) {
             cleanHref = removeURLParameter(window.location.href, "vehicleType");

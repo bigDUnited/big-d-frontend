@@ -13,33 +13,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import utilities.HttpServerGeneralUtils;
-import utils.RequestObjects;
+import utils.HttpServerGeneralUtils;
 import utils.StaticStrings;
 
 @WebServlet(name = "IndexController", urlPatterns = {"/reservation"})
 public class IndexController extends HttpServlet {
 
-    private RequestObjects reqObj;
     private StaticStrings ss;
-//    private Thread backendMockThread;
     private MockController backendMock;
     private HttpServerGeneralUtils utils;
 
     @Override
     public void init() throws ServletException {
-//        backendMockThread = new Thread(new BackendMockHttpServer(new String[0]));
-//        backendMockThread.start();
         backendMock = MockController.getInstance();
-
-        int loadingTime = 1000;
-        try {
-            Thread.sleep(loadingTime);
-        } catch (InterruptedException ex) {
-            System.out.println("Sleep failed, go to sleep, please : " + ex);
-        }
-
-        reqObj = new RequestObjects();
         ss = new StaticStrings();
         utils = new HttpServerGeneralUtils();
     }
@@ -74,41 +60,16 @@ public class IndexController extends HttpServlet {
         boolean areLocationsLoaded = false, areRoutesLoaded = false,
                 areJourneysLoaded = false, isSummaryLoaded = false;
 
-        //RO stands for response object eg. Locations Response Object
-//        Object locationsRO = reqObj.get(ss.GET_LOCATIONS_URL);
-//        if (locationsRO instanceof String) {
-//
-//            Type listType = new TypeToken<List<LocationDTO>>() {
-//            }.getType();
-//            locations = new Gson().fromJson((String) locationsRO, listType);
-//
-//            areLocationsLoaded = true;
-//        } else {
-//            plausableError += "***Oopsy Daisy*** The Location response is :"
-//                    + locationsRO;
-//        }
-        locations = backendMock.getAllLocations();
+        locations = backendMock.getLocations();
         areLocationsLoaded = true;
 
         if (areLocationsLoaded) {
             //Only search for routes info if the location id is set
             if (locationId != null && !locationId.isEmpty()) {
                 if (utils.isNumeric(locationId)) {
-//                    Object routesRO = reqObj.get(ss.GET_ROUTES_URL + locationId);
-//                    if (routesRO instanceof String) {
-//
-//                        Type listRouteType = new TypeToken<List<RouteDTO>>() {
-//                        }.getType();
-//                        routes = new Gson().fromJson((String) routesRO, listRouteType);
-//
-//                        areRoutesLoaded = true;
-//
-//                    } else {
-//                        plausableError += "***Oopsy Daisy*** The Routes response "
-//                                + "is :" + routesRO;
-//                    }
 
-                    routes = backendMock.getRoutes(locationId);
+                    int actualLocationId = Integer.parseInt(locationId);
+                    routes = backendMock.getRoutes(actualLocationId);
                     areRoutesLoaded = true;
 
                 } else {
@@ -122,17 +83,9 @@ public class IndexController extends HttpServlet {
             //Only search for journeys info if the routeId id is set
             if (routeId != null && !routeId.isEmpty()) {
                 if (utils.isNumeric(routeId)) {
-                    Object journeysRO = reqObj.get(ss.GET_JOURNEY_URL + routeId);
 
-//                    if (journeysRO instanceof String) {
-//                        journeys = new Gson().fromJson((String) journeysRO, JourneysDTO.class);
-//
-//                        areJourneysLoaded = true;
-//                    } else {
-//                        plausableError += "***Oopsy Daisy*** The Journey response"
-//                                + " is :" + journeysRO;
-//                    }
-                    journeys = backendMock.getJourney(routeId);
+                    int actualRouteId = Integer.parseInt(routeId);
+                    journeys = backendMock.getJourney(actualRouteId);
                     areJourneysLoaded = true;
                 } else {
                     plausableError += "***Oopsy Daisy*** Route ID was not set or "
@@ -149,27 +102,12 @@ public class IndexController extends HttpServlet {
 
                 if (utils.isNumeric(numOfPeople) && utils.isNumeric(journeyId)) {
 
-                    //postParams should have similar structure to : 
-                    //{ "journeyId": 5, "numberOfPeople": 3, "vehicleType": "Car" }
-                    String postParams = "{ \"journeyId\": " + journeyId
-                            + ", \"numberOfPeople\": " + numOfPeople
-                            + ", \"vehicleType\": \"" + vehicleType + "\" }";
-
-//                    Object resSumRO = reqObj.post(ss.POST_RESERVATION_URL,
-//                            postParams);
-//
-//                    if (resSumRO instanceof String) {
-//                        reservationSummary = new Gson().fromJson((String) resSumRO,
-//                                ReservationSummaryDTO.class);
-//
-//                        isSummaryLoaded = true;
-                    reservationSummary = backendMock.makeReservation(postParams);
+                    int actualJourneyId = Integer.parseInt(journeyId);
+                    int actualNumOfPpl = Integer.parseInt(numOfPeople);
+                    reservationSummary = backendMock.makeReservation(actualJourneyId,
+                            actualNumOfPpl, vehicleType);
                     isSummaryLoaded = true;
 
-//                } else {
-//                    plausableError += "***Oopsy Daisy*** The Reservation summary "
-//                            + "response is :" + resSumRO;
-//                }
                 } else {
                     plausableError += "***Oopsy Daisy*** vehicleType or numOfPeople "
                             + "or journeyId was not set correctly";
@@ -177,9 +115,7 @@ public class IndexController extends HttpServlet {
             }
         }
 
-        //set encoding of response MUST BE CALLED BEFORE response.getWriter()
-        response.setCharacterEncoding(
-                "UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
         PrintWriter out = response.getWriter();
 
