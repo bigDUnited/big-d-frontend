@@ -19,19 +19,25 @@ body {
     text-transform: uppercase;
     font-size: 1.6em;
     font-weight: 700;
-    color: #46799e;
+    color: #ff0000;
     text-decoration: underline;
 }
 
 #index-main-container {
-    text-align: center;
-    margin-top: 200px;
+    margin-top: 75px;
 }
 
 #create-reservation-link,
-#get-reservation-link,
-#user-reservation-id-input {
+#user-reservation-id-input,
+#get-reservation-link {
     cursor: pointer;
+}
+
+#get-reservation-link,
+#create-reservation-link {
+    border-radius: 20px;
+    padding: 10px;
+    background-color: #ff0000;
 }
 
 #user-reservation-id-input {
@@ -39,19 +45,22 @@ body {
     color: #fff;
     border: 1px solid #000000;
     border-radius: 5px;
-    padding: 5px 10px;
+    padding: 10px;
     outline: none;
+    width: 160px;
 }
 
 #index-main-container .create-reservation-wrapper,
-#index-main-container .get-reservation-wrapper
- {
+#index-main-container .get-reservation-wrapper {
     font-weight: 700;
-    margin: 40px 20px;
-    background-color: #46799e;
+    background-color: #ffa500;
     color: #fff;
     border-radius: 10px;
     padding: 10px;
+    margin: 10px 20px;
     width: 300px;
-    display: inline-block;
+}
+
+#index-main-container .create-reservation-wrapper p {
+    display: inline-block
 }

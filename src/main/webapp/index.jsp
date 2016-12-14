@@ -8,18 +8,19 @@
 
         <link rel="stylesheet" href="css/index.css" />
         <link rel="shortcut icon" href="favicon.ico" />
-
         <script src="js/index.js"></script>
     </head>
     <body onload="load();">
         <div id="index-main-container">
             <p class="index-intro-text">${intro}</p>
             <div class="create-reservation-wrapper">
-                <p id="create-reservation-link" data-path="${createReservationPath}" onclick="createReservation()">Create a new Reservation</p>
+                <p>Create a new Reservation :</p>
+                <a id="create-reservation-link" data-path="${createReservationPath}" onclick="createReservation()">Load</a>
             </div>
             <div class="get-reservation-wrapper">
-                <p id="get-reservation-link" data-path="${getReservationPath}" onclick="getReservation('click')">Get a new Reservation by ID</p>
+                <p>Get a new Reservation by ID :</p>
                 <input id="user-reservation-id-input" onkeydown="getReservation('enter')">
+                <a id="get-reservation-link" data-path="${getReservationPath}" onclick="getReservation('click')">Load</a>
             </div>
         </div>
     </body>
