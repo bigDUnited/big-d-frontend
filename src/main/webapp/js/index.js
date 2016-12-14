@@ -1,38 +1,30 @@
-//populate a select element with
-function loadSelect(id, data) {
-    var select = $("#"+id);
-    var res = "";
-    data.forEach(function(e) {
-	console.log(e);
-	res+='<option value="' + e + '">' + e + '</option>';
-    });
-    select.html(res);
+
+function isInt(value) {
+    return !isNaN(value) &&
+            parseInt(Number(value)) == value &&
+            !isNaN(parseInt(value, 10));
 }
 
-$(document).ready(function(){
-    $("#location").on('change', function (e) {
-	console.log("selected location");
-    });
-    $("#route").on('change', function (e) {
-	console.log("selected route");
-    });
-    $("#journey").on('change', function (e) {
-	console.log("selected journey");
-    });
+function getReservation(type) {
+    if (event.keyCode == 13 || "click" == type) {
+        var selectedId = document.getElementById("user-reservation-id-input").value;
 
-    $("#reserve").on('click', function (e) {
-	console.log("selected reserve");
-    });
-    var locations = $.get("api/locations")
-	.done(function(data) {
-	    console.log("Received")
-	    console.log(data)
-	})
-	.fail(function() {
-	    console.log("oh no, failed")
-	    //delete me
-	    loadSelect("location",
-		       ["location A", "location B", "loc C"]);
-	})
+        if (isInt(selectedId)) {
+            console.log("selectedId : ", selectedId);
+            var getReservationLinkElem = document.getElementById("get-reservation-link").dataset.path;
+            window.location.href = window.location.href.replace("/home", getReservationLinkElem + "?reservationId=" + selectedId);
+        } else {
+            console.log("Not an integer, skip!");
+        }
+    }
+}
 
-});
+function createReservation() {
+    var createReservationLinkElem = document.getElementById("create-reservation-link").dataset.path;
+    window.location.href = window.location.href.replace("/home", createReservationLinkElem);
+
+}
+
+function load() {
+    console.log("Index js loaded...");
+}

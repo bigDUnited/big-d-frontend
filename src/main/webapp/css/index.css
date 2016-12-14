@@ -1,0 +1,57 @@
+body {
+    font-size: 14px;
+    color: #555555;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.65em;
+    margin: 10px;
+    background: url("../images/firestartah.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #f2f2f2;
+}
+
+#index-main-container .index-intro-text {
+    display: block;
+    margin: 1em 0 1em 25px;
+    letter-spacing: 1px;
+    line-height: 1.4em;
+    text-transform: uppercase;
+    font-size: 1.6em;
+    font-weight: 700;
+    color: #46799e;
+    text-decoration: underline;
+}
+
+#index-main-container {
+    text-align: center;
+    margin-top: 200px;
+}
+
+#create-reservation-link,
+#get-reservation-link,
+#user-reservation-id-input {
+    cursor: pointer;
+}
+
+#user-reservation-id-input {
+    background-color: #000000;
+    color: #fff;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    padding: 5px 10px;
+    outline: none;
+}
+
+#index-main-container .create-reservation-wrapper,
+#index-main-container .get-reservation-wrapper
+ {
+    font-weight: 700;
+    margin: 40px 20px;
+    background-color: #46799e;
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    width: 300px;
+    display: inline-block;
+}

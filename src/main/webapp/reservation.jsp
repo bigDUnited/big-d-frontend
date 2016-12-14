@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
-        <title>Reservation</title>
+        <title>Create Reservation</title>
 
         <link rel="stylesheet" href="css/reservation.css" />
         <link rel="shortcut icon" href="favicon.ico" />
