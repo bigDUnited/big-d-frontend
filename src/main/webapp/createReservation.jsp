@@ -6,12 +6,14 @@
         <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
         <title>Create Reservation</title>
 
-        <link rel="stylesheet" href="css/reservation.css" />
+        <link rel="stylesheet" href="css/createReservation.css" />
         <link rel="shortcut icon" href="favicon.ico" />
 
-        <script src="js/reservation.js"></script>
+        <script src="js/createReservation.js"></script>
     </head>
     <body onload="load();">
+        <button class="back-btn" onclick="goFront()">Back to frontpage</button>
+        <button class="back-btn" onclick="goBack()">Revert</button>
         <div class="header-wrapper">
             <span class="header-title">Create a Reservation:</span>
             <span class="header-description">Welcome to our ferry reservation system. Making a reservation is 

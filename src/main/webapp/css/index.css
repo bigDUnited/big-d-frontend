@@ -6,8 +6,7 @@ body {
     line-height: 1.65em;
     margin: 10px;
     background: url("../images/firestartah.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-size: 55%;
     background-color: #f2f2f2;
 }
 
@@ -29,7 +28,8 @@ body {
 
 #create-reservation-link,
 #user-reservation-id-input,
-#get-reservation-link {
+#get-reservation-link,
+#index-main-container .get-reservations-wrapper a {
     cursor: pointer;
 }
 
@@ -51,7 +51,8 @@ body {
 }
 
 #index-main-container .create-reservation-wrapper,
-#index-main-container .get-reservation-wrapper {
+#index-main-container .get-reservation-wrapper,
+#index-main-container .get-reservations-wrapper {
     font-weight: 700;
     background-color: #ffa500;
     color: #fff;
@@ -61,6 +62,37 @@ body {
     width: 300px;
 }
 
+#index-main-container .get-reservation-wrapper {
+    height: 120px;
+}
+
+#index-main-container .get-reservation-wrapper #error-message,
+#index-main-container .get-reservations-wrapper #error-message-two {
+    margin: 10px;
+    font-weight: 300;
+    color: #f7ff00;
+}
+
+#index-main-container .get-reservation-wrapper #error-message {
+    display: none;
+}
+
+#index-main-container .get-reservations-wrapper #error-message-two {
+    display: block;
+}
+
+#index-main-container .get-reservations-wrapper {
+    position: absolute;
+    top: 120px;
+    left: 350px;
+    height: 200px;
+}
+
 #index-main-container .create-reservation-wrapper p {
     display: inline-block
+
+}
+
+#index-main-container .get-reservations-wrapper p {
+    margin-left: 10px;
 }

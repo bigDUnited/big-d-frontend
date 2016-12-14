@@ -14,7 +14,9 @@ function getReservation(type) {
             var getReservationLinkElem = document.getElementById("get-reservation-link").dataset.path;
             window.location.href = window.location.href.replace("/home", getReservationLinkElem + "?reservationId=" + selectedId);
         } else {
-            console.log("Not an integer, skip!");
+            var errorMessageElem = document.getElementById("error-message");
+            errorMessageElem.innerHTML = "Error: Not an integer, skip!";
+            errorMessageElem.style.display = "block";
         }
     }
 }

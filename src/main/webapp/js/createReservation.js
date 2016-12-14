@@ -1,4 +1,13 @@
 
+function goFront() {
+    var subString = window.location.href.substring(0, window.location.href.indexOf("/createReservation"));
+    window.location.href = subString;
+}
+
+function goBack() {
+    window.history.back();
+}
+
 function removeURLParameter(url, parameter) {
     //prefer to use l.search if you have a location/link object
     var urlparts = url.split('?');

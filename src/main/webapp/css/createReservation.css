@@ -56,7 +56,8 @@ hr {
     font-style: italic;
 }
 
-.main-content-wrapper .create-reservation-btn {
+.main-content-wrapper .create-reservation-btn,
+.back-btn {
     cursor: pointer;
     background-color: #1889dc;
     border: none;

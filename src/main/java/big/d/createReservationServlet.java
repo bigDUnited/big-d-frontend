@@ -137,7 +137,7 @@ public class createReservationServlet extends HttpServlet{
                 request.setAttribute("errorObject", plausableError);
             }
 
-            request.getRequestDispatcher("reservation.jsp").forward(request, response);
+            request.getRequestDispatcher("createReservation.jsp").forward(request, response);
 
         } catch (IOException | ServletException e) {
 
