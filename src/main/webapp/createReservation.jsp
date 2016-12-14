@@ -12,7 +12,7 @@
         <script src="js/createReservation.js"></script>
     </head>
     <body onload="load();">
-        <button class="back-btn" onclick="goFront()">Back to frontpage</button>
+        <button class="back-btn" onclick="goFront()">Back to Home</button>
         <button class="back-btn" onclick="goBack()">Revert</button>
         <div class="header-wrapper">
             <span class="header-title">Create a Reservation:</span>

@@ -12,12 +12,13 @@
         <script src="js/getReservation.js"></script>
     </head>
     <body>
-        <button class="back-btn" onclick="goBack()">Back</button>
+        <button class="back-btn" onclick="goFront()">Back to Home</button>
+        <button class="back-btn" onclick="goBack()">Revert</button>
         <c:choose>
             <c:when test="${empty errorObject}">
                 <c:if test="${not empty reservation}">
+                    <h2>Hello, your current reservation is:</h2>
                     <div class="stage-wrapper reservation-summary-wrapper">
-                        <h2>Hello, your current reservation is:</h2>
                         <div>
                             <span class="reservation-label">Reference Number:</span>
                             <span class="reservation-content">${reservation.referenceNumber}</span>
@@ -54,7 +55,7 @@
                 </c:if>
             </c:when>
             <c:otherwise>
-                <span>Error: ${errorObject}</span>
+                <span class="error-message">Error: ${errorObject}</span>
             </c:otherwise>
         </c:choose>
     </body>
