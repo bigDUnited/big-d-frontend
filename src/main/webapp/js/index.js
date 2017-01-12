@@ -6,7 +6,7 @@ function isInt(value) {
 }
 
 function getReservation(type) {
-    if (event.keyCode == 13 || "click" == type) {
+    if (event.keyCode === 13 || "click" === type) {
         var selectedId = document.getElementById("user-reservation-id-input").value;
 
         if (isInt(selectedId)) {
