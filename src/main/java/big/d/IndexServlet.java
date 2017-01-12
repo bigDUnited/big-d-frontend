@@ -1,5 +1,6 @@
 package big.d;
 
+import contractinterface.ContractInterface;
 import controller.MockController;
 import dtos.ReservationSummaryDTO;
 import java.io.IOException;
@@ -15,7 +16,7 @@ import utils.HttpServerGeneralUtils;
 @WebServlet(name = "IndexServlet", urlPatterns = {"/index"})
 public class IndexServlet extends HttpServlet {
 
-    private MockController backendMock;
+    private ContractInterface backendMock;
     private HttpServerGeneralUtils utils;
 
     @Override
